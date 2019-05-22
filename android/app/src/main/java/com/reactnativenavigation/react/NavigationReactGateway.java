@@ -28,7 +28,28 @@ public class NavigationReactGateway implements ReactGateway {
 	private JsDevReloadHandler jsDevReloadHandler;
 
 	public NavigationReactGateway() {
-		host = new ReactNativeHostImpl();
+		this(null);
+	}
+
+	public NavigationReactGateway(final UIImplementationProvider customImplProvider) {
+
+ 		if (customImplProvider != null) {
+			host = new ReactNativeHostImpl() {
+				/**
+				 * This was added in case someone needs to provide a different UIImplementationProvider
+				 * @param {UIImplementationProvider} defaultProvider
+				 * @return {UIImplementationProvider}
+				 */
+				@Override
+				protected UIImplementationProvider getUIImplementationProvider() {
+					return customImplProvider;
+				}
+			};
+		} else {
+			host = new ReactNativeHostImpl();
+		}
+
+
 		jsDevReloadHandler = new JsDevReloadHandler();
 	}
 
@@ -114,9 +135,9 @@ public class NavigationReactGateway implements ReactGateway {
 		reactEventEmitter = new NavigationReactEventEmitter(context);
 	}
 
-	private static class ReactNativeHostImpl extends ReactNativeHost implements ReactInstanceManager.ReactInstanceEventListener {
+	public static class ReactNativeHostImpl extends ReactNativeHost implements ReactInstanceManager.ReactInstanceEventListener {
 
-		ReactNativeHostImpl() {
+		public ReactNativeHostImpl() {
 			super(NavigationApplication.instance);
 		}
 

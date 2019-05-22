@@ -12,6 +12,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.uimanager.UIImplementationProvider;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.reactnativenavigation.bridge.EventEmitter;
 import com.reactnativenavigation.controllers.ActivityCallbacks;
@@ -34,7 +35,7 @@ public abstract class NavigationApplication extends Application implements React
         super.onCreate();
         instance = this;
         handler = new Handler(getMainLooper());
-        reactGateway = new NavigationReactGateway();
+        reactGateway = new NavigationReactGateway(getUIImplementationProvider());
         eventEmitter = new EventEmitter(reactGateway);
         activityCallbacks = new ActivityCallbacks();
     }
@@ -52,7 +53,9 @@ public abstract class NavigationApplication extends Application implements React
             super.startActivity(intent);
         }
     }
-
+    protected UIImplementationProvider getUIImplementationProvider() {
+        return null; // if null the default UIImplementationProvider will be used
+    }
     public void startReactContextOnceInBackgroundAndExecuteJS() {
         reactGateway.startReactContextOnceInBackgroundAndExecuteJS();
     }
