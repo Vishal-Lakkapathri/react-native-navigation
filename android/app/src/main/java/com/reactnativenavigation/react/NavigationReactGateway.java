@@ -10,6 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
+import com.facebook.react.uimanager.UIImplementationProvider;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.bridge.NavigationReactEventEmitter;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
