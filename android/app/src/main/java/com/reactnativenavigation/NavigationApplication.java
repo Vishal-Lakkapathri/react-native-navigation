@@ -131,6 +131,10 @@ public abstract class NavigationApplication extends Application implements React
         return true;
     }
 
+    public boolean clearHostOnActivityDestroy() {
+        return true;
+    }
+
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
 }

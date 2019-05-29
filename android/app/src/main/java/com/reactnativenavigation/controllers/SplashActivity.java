@@ -1,7 +1,5 @@
 package com.reactnativenavigation.controllers;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -10,27 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.react.*;
-import com.reactnativenavigation.utils.CompatUtils;
+import com.reactnativenavigation.react.ReactDevPermission;
 
 public abstract class SplashActivity extends AppCompatActivity {
     public static boolean isResumed = false;
 
-    public static void start(Activity activity) {
-        Intent intent = activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName());
-        if (intent == null) return;
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LaunchArgs.instance.set(getIntent());
         setSplashLayout();
         IntentDataHandler.saveIntentData(getIntent());
     }
@@ -41,15 +26,7 @@ public abstract class SplashActivity extends AppCompatActivity {
         isResumed = true;
 
         if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
-            if (CompatUtils.isSplashOpenedOverNavigationActivity(this, getIntent())) {
-                finish();
-                return;
-            }
             NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
-            if (NavigationApplication.instance.clearHostOnActivityDestroy(this)) {
-                overridePendingTransition(0, 0);
-                finish();
-            }
             return;
         }
 
