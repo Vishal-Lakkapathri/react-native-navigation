@@ -41,15 +41,7 @@ public abstract class SplashActivity extends AppCompatActivity {
         isResumed = true;
 
         if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
-            if (CompatUtils.isSplashOpenedOverNavigationActivity(this, getIntent())) {
-                finish();
-                return;
-            }
             NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
-            if (NavigationApplication.instance.clearHostOnActivityDestroy(this)) {
-                overridePendingTransition(0, 0);
-                finish();
-            }
             return;
         }
 
