@@ -198,7 +198,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     private void destroyJsIfNeeded() {
-        if ((currentActivity == null && numberOfActivities < 2) || (currentActivity != null && currentActivity.isFinishing())) {
+        if (currentActivity == null || currentActivity.isFinishing()) {
             getReactGateway().onDestroyApp(this);
         }
     }

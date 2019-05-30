@@ -85,23 +85,15 @@ public class NavigationReactGateway implements ReactGateway {
 		getReactInstanceManager().onBackPressed();
 	}
 
-	public void onDestroyApp(Activity activity) {
-        if (NavigationApplication.instance.clearHostOnActivityDestroy(activity)) {
-            getReactInstanceManager().onHostDestroy();
-        } else if (hasStartedCreatingContext() && isInitialized()) {
-            getReactInstanceManager().onHostDestroy(activity);
-        }
-        if (NavigationApplication.instance.clearHostOnActivityDestroy(activity)) {
-            host.clear();
-        }
+  public void onDestroyApp(Activity activity) {
+    getReactInstanceManager().onHostDestroy(activity);
+    if (NavigationApplication.instance.clearHostOnActivityDestroy()) {
+      host.clear();
     }
+  }
 
 	public void onPauseActivity(Activity activity) {
-        if (NavigationApplication.instance.clearHostOnActivityDestroy(activity)) {
-            getReactInstanceManager().onHostPause();
-        } else if (hasStartedCreatingContext() && isInitialized()) {
-		    getReactInstanceManager().onHostPause(activity);
-        }
+		getReactInstanceManager().onHostPause(activity);
 		jsDevReloadHandler.onPauseActivity();
 	}
 
