@@ -130,7 +130,7 @@ public abstract class NavigationApplication extends Application implements React
 
     public abstract boolean isDebug();
 
-    public boolean clearHostOnActivityDestroy() {
+    public boolean clearHostOnActivityDestroy(Activity activity) {
         return true;
     }
 

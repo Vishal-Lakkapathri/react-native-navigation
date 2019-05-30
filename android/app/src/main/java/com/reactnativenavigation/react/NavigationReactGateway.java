@@ -87,7 +87,7 @@ public class NavigationReactGateway implements ReactGateway {
 
   public void onDestroyApp(Activity activity) {
     getReactInstanceManager().onHostDestroy(activity);
-    if (NavigationApplication.instance.clearHostOnActivityDestroy()) {
+    if (NavigationApplication.instance.clearHostOnActivityDestroy(activity)) {
       host.clear();
     }
   }
